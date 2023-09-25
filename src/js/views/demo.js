@@ -4,10 +4,16 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
+import { array } from "prop-types";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
 
+	function eliminar(indexDelete){
+		console.log('eliminar' + indexDelete)
+		console.log(store.contacts)		
+		console.log(store.contacts.filter( (item,index) => index != indexDelete))		
+	}
 	return (
 		<div className="container">
 			<ul className="list-group">
@@ -30,6 +36,32 @@ export const Demo = () => {
 							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
 								Change Color
 							</button>
+						</li>
+					);
+				})}
+			</ul>
+			<br />
+
+
+			<ul className="list-group">
+				{store.contacts.map((item, index) => {
+					return (
+						<li
+							key={index}
+							className="list-group-item d-flex justify-content-between"
+							>		
+							<p>{ item.full_name }</p>
+							<p>{ item.email}</p>
+							<p>{ index}</p>
+							<p>{ item.id}</p>
+							
+							<br/>
+
+							<button onClick={ () => actions.deleteContact(item.id)}>eliminar</button>
+							
+
+						
+														
 						</li>
 					);
 				})}
